@@ -19,25 +19,6 @@ export async function signUp(req, res) {
     res.sendStatus(201);
 }
 
-export async function signUpAntigo(req, res) {
-
-    /*Checa se usuário já existe*/
-    const query  = await db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email]);
-
-    if(query.rows.length > 0){
-        return res.sendStatus(409);
-    }
-
-    const hash = bcrypt.hashSync(req.body.password, 10);  
-
-    
-    await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`, 
-                    [req.body.name, req.body.email, hash ]
-    );
-    
-    res.sendStatus(201);
-}
-
 export async function signIn(req, res) {
 
     const { email, password } = req.body;
