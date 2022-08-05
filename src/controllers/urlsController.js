@@ -28,5 +28,18 @@ export async function getUrlById(req, res) {
     }else{
         return res.sendStatus(404);
     }
-    
+}
+
+export async function openUrl(req, res) {
+
+    const { shortUrl } = req.params;
+
+    const url  = await db.query(`UPDATE urls SET clicks = clicks + 1 WHERE "shortUrl" = $1 RETURNING url`, [shortUrl]);
+
+    if(url.rows[0]){
+
+        return res.redirect(url.rows[0].url);
+    }else{
+        return res.sendStatus(404);
+    }
 }
