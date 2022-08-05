@@ -4,8 +4,8 @@ import { signUpMiddleware, signInMiddleware } from '../middlewares/authMiddlewar
 
 const router = Router();
 
-router.post("/sign-up", signUpMiddleware, signUp);
+router.post("/signup", signUpMiddleware, signUp);
 
-router.post("/sign-in", signInMiddleware, signIn);
+router.post("/signin", signInMiddleware, signIn);
 
 export default router;
