@@ -43,3 +43,23 @@ export async function openUrl(req, res) {
         return res.sendStatus(404);
     }
 }
+
+export async function deleteUrlById(req, res) {
+
+    const { id } = req.params;
+    const { user } = res.locals;
+
+    const url  = await db.query(`SELECT "userId" FROM urls WHERE id = $1`, [id]);
+
+    if(url.rows.length  == 0 ){
+        return res.sendStatus(404);
+    }
+
+    if(url.rows[0].userId  != user.id ){
+        return res.sendStatus(401);
+    }
+
+    await db.query(`DELETE FROM urls WHERE id = $1 AND "userId" = $2`, [id, user.id]);
+
+    return res.sendStatus(204);
+}
