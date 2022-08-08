@@ -18,7 +18,7 @@ export async function tokenMiddleware(req, res, next) {
     const user = await db.query(`SELECT * FROM users WHERE id = $1`, [session.rows[0].userId]);
 
     if (user.rows.length == 0) {
-        return res.sendStatus(401);
+        return res.sendStatus(404);
     }
 
     delete user.rows[0].password;
